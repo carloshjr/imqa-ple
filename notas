@@ -40,17 +40,18 @@
     </div>
     
     <script>
-        let apiUrl = "https://carloshjr.pythonanywhere.com";
-        async function calcularNotaFinal() {
+        let apiUrl = "https://carloshjr.pythonanywhere.com"; // Substitua pela URL correta da sua API
+
+async function calcularNotaFinal() {
     let idAluno = document.getElementById("idAluno").value;
-    
+
     if (!idAluno) {
         alert("Por favor, insira o número de identificação.");
         return;
     }
 
     try {
-        let response = await fetch(`http://carloshjr.pythonanywhere.com/aluno/${idAluno}`);
+        let response = await fetch(`${apiUrl}/aluno/${idAluno}`); // Atualizando para usar a URL pública
         let data = await response.json();
 
         if (response.status !== 200) {
@@ -77,6 +78,7 @@
         document.getElementById("resultado").innerText = "Erro ao conectar ao servidor.";
     }
 }
+
     </script>
 </body>
 </html>
