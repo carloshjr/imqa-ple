@@ -41,22 +41,42 @@
     
     <script>
         let apiUrl = "https://carloshjr.pythonanywhere.com";
-        function calcularNotaFinal() {
-            let notaProva1 = parseFloat(document.getElementById("notaProva1").value);
-            let notaMinimaAprovacao = 6;  // Nota mínima para passar
-            let pesoProva1 = 0.4;  // Peso da primeira prova
-            let pesoProvaFinal = 0.6;  // Peso da prova final
-            
-            let notaNecessaria = (notaMinimaAprovacao - (notaProva1 * pesoProva1)) / pesoProvaFinal;
-            
-            if (notaNecessaria <= 0) {
-                document.getElementById("resultado").innerText = "Parabéns! Você já está aprovado!";
-            } else if (notaNecessaria > 10) {
-                document.getElementById("resultado").innerText = "Infelizmente, não é possível alcançar a média mínima.";
-            } else {
-                document.getElementById("resultado").innerText = "Você precisa tirar pelo menos " + notaNecessaria.toFixed(2) + " na prova final.";
-            }
+        async function calcularNotaFinal() {
+    let idAluno = document.getElementById("idAluno").value;
+    
+    if (!idAluno) {
+        alert("Por favor, insira o número de identificação.");
+        return;
+    }
+
+    try {
+        let response = await fetch(`http://127.0.0.1:5000/aluno/${idAluno}`);
+        let data = await response.json();
+
+        if (response.status !== 200) {
+            document.getElementById("resultado").innerText = "Aluno não encontrado.";
+            return;
         }
+
+        let notaProva1 = data.nota_prova1;
+        let notaMinimaAprovacao = 6;
+        let pesoProva1 = 0.4;
+        let pesoProvaFinal = 0.6;
+
+        let notaNecessaria = (notaMinimaAprovacao - (notaProva1 * pesoProva1)) / pesoProvaFinal;
+
+        if (notaNecessaria <= 0) {
+            document.getElementById("resultado").innerText = "Parabéns! Você já está aprovado!";
+        } else if (notaNecessaria > 10) {
+            document.getElementById("resultado").innerText = "Infelizmente, não é possível alcançar a média mínima.";
+        } else {
+            document.getElementById("resultado").innerText = `Você precisa tirar pelo menos ${notaNecessaria.toFixed(2)} na prova final.`;
+        }
+    } catch (error) {
+        console.error("Erro ao buscar os dados:", error);
+        document.getElementById("resultado").innerText = "Erro ao conectar ao servidor.";
+    }
+}
     </script>
 </body>
 </html>
