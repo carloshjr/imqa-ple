@@ -40,6 +40,7 @@
     </div>
     
     <script>
+        let apiUrl = "https://carloshjr.pythonanywhere.com";
         function calcularNotaFinal() {
             let notaProva1 = parseFloat(document.getElementById("notaProva1").value);
             let notaMinimaAprovacao = 6;  // Nota mínima para passar
