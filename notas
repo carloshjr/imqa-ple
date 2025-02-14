@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Nota Final</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        .container {
+            max-width: 400px;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        input, button {
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Calculadora de Nota Final</h2>
+        <label for="idAluno">Número de Identificação:</label>
+        <input type="text" id="idAluno" placeholder="Digite seu ID">
+        
+        <label for="notaProva1">Nota da Última Prova:</label>
+        <input type="number" id="notaProva1" placeholder="Digite sua nota" min="0" max="10">
+        
+        <button onclick="calcularNotaFinal()">Calcular Nota Necessária</button>
+        
+        <h3 id="resultado"></h3>
+    </div>
+    
+    <script>
+        function calcularNotaFinal() {
+            let notaProva1 = parseFloat(document.getElementById("notaProva1").value);
+            let notaMinimaAprovacao = 6;  // Nota mínima para passar
+            let pesoProva1 = 0.4;  // Peso da primeira prova
+            let pesoProvaFinal = 0.6;  // Peso da prova final
+            
+            let notaNecessaria = (notaMinimaAprovacao - (notaProva1 * pesoProva1)) / pesoProvaFinal;
+            
+            if (notaNecessaria <= 0) {
+                document.getElementById("resultado").innerText = "Parabéns! Você já está aprovado!";
+            } else if (notaNecessaria > 10) {
+                document.getElementById("resultado").innerText = "Infelizmente, não é possível alcançar a média mínima.";
+            } else {
+                document.getElementById("resultado").innerText = "Você precisa tirar pelo menos " + notaNecessaria.toFixed(2) + " na prova final.";
+            }
+        }
+    </script>
+</body>
+</html>
