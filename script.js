@@ -8,7 +8,7 @@ async function consultarMedSemestre() {
 
     try {
         // Substitua pela URL da sua API no PythonAnywhere
-        const response = await fetch(`https:// carloshjr.pythonanywhere.com`);
+        const response = await fetch(`https:// carloshjr.pythonanywhere.com/api/med_semestre`);
         const alunos = await response.json();
         
         // Filtrando aluno pelo nome
